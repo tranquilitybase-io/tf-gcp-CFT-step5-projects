@@ -5,6 +5,11 @@ pipeline {
           defaultContainer 'gcloud'
         }
     }
+    environment {
+           def projects_params = "${projects_params}"
+
+
+    }
     parameters {
 
         string( name: 'projects_params',
@@ -12,6 +17,13 @@ pipeline {
                 defaultValue: '{"foo":"bar","cat":"fish"}'
         )
     }
+    stage ('Test received params') {
+                steps {
+                    sh '''
+                    echo \"$projects_params\"
+                    '''
+                }
+            }
     stages {
         stage('Setup Terraform & Dependencies') {
              steps {
@@ -34,7 +46,7 @@ pipeline {
                          sh '''
                              echo Setup projects_params
                              echo $project_params | jq "." > terraform.auto.tfvars.json
-                             echo $project_params
+                             cat ./terraform.auto.tfvars.json
                              echo Activate service account
                              gcloud auth activate-service-account --key-file $GOOGLE_APPLICATION_CREDENTIALS
 
