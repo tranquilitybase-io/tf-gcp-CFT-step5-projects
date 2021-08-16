@@ -44,13 +44,15 @@ pipeline {
          stage('Initialise') {
              steps {
                  sh '''
-                     echo Setup projects_params
+                     echo "Creating terraform auto file"
                      echo \"$projects_params\" | jq "." > terraform.auto.tfvars.json
-                     jq -r '.foo' ./terraform.auto.tfvars.json > $WORKSPACE/.foovar
-                     export foovar=`cat $WORKSPACE/.foovar`
 
-                     cat ./terraform.auto.tfvars.json
-                     echo Activate service account
+                     echo "Exporting cloud build project id"
+                     jq -r '.CLOUD_BUILD_PROJECT_ID' ./terraform.auto.tfvars.json > $WORKSPACE/.CLOUD_BUILD_PROJECT_ID
+                     export CLOUD_BUILD_PROJECT_ID=`cat $WORKSPACE/.CLOUD_BUILD_PROJECT_ID`
+                     echo $CLOUD_BUILD_PROJECT_ID
+
+                     echo "Activating service account"
                      gcloud auth activate-service-account --key-file $GOOGLE_APPLICATION_CREDENTIALS
                  '''
             }
