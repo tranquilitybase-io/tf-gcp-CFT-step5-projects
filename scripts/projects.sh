@@ -1,13 +1,14 @@
 echo "starting script!!"
-pwd
-ls
 
-#PROJECTS_FOLDER=./projects
-#[ -d $PROJECTS_FOLDER ] && { echo "Removing past deployment file $PROJECTS_FOLDER"; rm -rf $PROJECTS_FOLDER; } || echo "No past deployments found"
+PROJECTS_FOLDER=./projects
+[ -d $PROJECTS_FOLDER ] && { echo "Removing past deployment file $PROJECTS_FOLDER"; rm -rf $PROJECTS_FOLDER; } || echo "No past deployments found"
+
 #
-#echo sourcing required variables
-#source ./scripts/4-projects/env-variables.sh
+#ENV-VARIABLES=./env-variables.sh
+#[ -f $ENV-VARIABLES ] && { echo Sourcing required variables; source $ENV-VARIABLES; } || { echo "Pulling required variables from json string"; exit 1; }
 #
+
+
 #echo Creating projects folder
 #mkdir projects
 #cd ./projects
