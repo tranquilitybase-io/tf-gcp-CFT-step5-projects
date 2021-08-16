@@ -1,0 +1,40 @@
+pipeline {
+    agent {
+        kubernetes {
+          label 'kubepod'
+          defaultContainer 'gcloud'
+        }
+    }
+    environment {
+
+    }
+    parameters {
+
+        string( name: 'projects_params',
+                description: 'json string'
+        )
+    }
+    stages {
+        stage('Initialise') {
+            steps {
+                sh '''
+                    echo Setup projects_params
+                    echo $projects_params | jq > ./projects_params.auto.tfvars.json
+
+                    echo Activate service account
+                    gcloud auth activate-service-account --key-file $GOOGLE_APPLICATION_CREDENTIALS
+
+
+                '''
+           }
+        }
+    }
+    post {
+        always {
+            script {
+                deleteDir()
+            }
+        }
+    }
+
+}
