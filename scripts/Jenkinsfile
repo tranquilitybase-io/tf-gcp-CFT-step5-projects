@@ -48,9 +48,6 @@ pipeline {
                      echo \"$projects_params\" | jq "." > terraform.auto.tfvars.json
                      jq -r '.foo' ./terraform.auto.tfvars.json > $WORKSPACE/.foovar
                      export foovar=`cat $WORKSPACE/.foovar`
-                     echo "###"
-                     echo $foovar
-                     echo "###"
 
                      cat ./terraform.auto.tfvars.json
                      echo Activate service account
