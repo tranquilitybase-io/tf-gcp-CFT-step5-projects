@@ -13,19 +13,6 @@ pipeline {
         )
     }
     stages {
-        stage('Initialise') {
-            steps {
-                sh '''
-                    echo Setup projects_params
-                    echo $projects_params | jq > ./projects_params.auto.tfvars.json
-
-                    echo Activate service account
-                    gcloud auth activate-service-account --key-file $GOOGLE_APPLICATION_CREDENTIALS
-
-
-                '''
-           }
-        }
         stage('Setup Terraform & Dependencies') {
              steps {
                  container('gcloud') {
@@ -42,5 +29,18 @@ pipeline {
              }
 
          }
+         stage('Initialise') {
+                     steps {
+                         sh '''
+                             echo Setup projects_params
+                             echo $projects_params | jq > ./projects_params.auto.tfvars.json
+
+                             echo Activate service account
+                             gcloud auth activate-service-account --key-file $GOOGLE_APPLICATION_CREDENTIALS
+
+
+                         '''
+                    }
+                 }
     }
 }
