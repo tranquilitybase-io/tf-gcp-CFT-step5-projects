@@ -8,8 +8,8 @@ pipeline {
     parameters {
 
         string( name: 'projects_params',
-                description: 'json string'
-                defaultValue: '{"foo":"bar","cat":"fish"}',
+                description: 'json string',
+                defaultValue: '{"foo":"bar","cat":"fish"}'
         )
     }
     stages {
