@@ -55,7 +55,7 @@ pipeline {
                  '''
             }
          }
-         stage('Initialise') {
+         stage('Make Project') {
               steps {
                   sh '''
                       make projects
