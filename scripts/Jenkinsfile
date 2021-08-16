@@ -5,9 +5,6 @@ pipeline {
           defaultContainer 'gcloud'
         }
     }
-    environment {
-
-    }
     parameters {
 
         string( name: 'projects_params',
