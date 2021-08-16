@@ -14,7 +14,7 @@ pipeline {
 
         string( name: 'projects_params',
                 description: 'json string',
-                defaultValue: '{"foo":"bar","cat":"fish"}'
+                defaultValue: '{"CLOUD_BUILD_PROJECT_ID":"123","cat":"fish"}'
         )
     }
     stages {
