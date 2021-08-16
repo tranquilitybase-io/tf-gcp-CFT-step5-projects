@@ -7,6 +7,7 @@ pipeline {
     }
     environment {
            def projects_params = "${projects_params}"
+           def CICD_PROJECT_ID = "${CICD_PROJECT_ID}"
 
 
     }
@@ -48,9 +49,8 @@ pipeline {
                      echo \"$projects_params\" | jq "." > terraform.auto.tfvars.json
 
                      echo "Exporting cloud build project id"
-                     jq -r '.CLOUD_BUILD_PROJECT_ID' ./terraform.auto.tfvars.json > $WORKSPACE/.CLOUD_BUILD_PROJECT_ID
-                     export CLOUD_BUILD_PROJECT_ID=`cat $WORKSPACE/.CLOUD_BUILD_PROJECT_ID`
-                     echo $CLOUD_BUILD_PROJECT_ID
+                     export CLOUD_BUILD_PROJECT_ID=$CICD_PROJECT_ID
+                     echo $CICD_PROJECT_ID
 
                      echo "Activating service account"
                      gcloud auth activate-service-account --key-file $GOOGLE_APPLICATION_CREDENTIALS
