@@ -42,18 +42,25 @@ pipeline {
 
          }
          stage('Initialise') {
-                     steps {
-                         sh '''
-                             echo Setup projects_params
-                             echo \"$projects_params\" | jq "." > terraform.auto.tfvars.json
-                             pwd
-                             ls
-                             pwd
-                             cat ./terraform.auto.tfvars.json
-                             echo Activate service account
-                             gcloud auth activate-service-account --key-file $GOOGLE_APPLICATION_CREDENTIALS
-                         '''
-                    }
+             steps {
+                 sh '''
+                     echo Setup projects_params
+                     echo \"$projects_params\" | jq "." > terraform.auto.tfvars.json
+                     pwd
+                     ls
+                     pwd
+                     cat ./terraform.auto.tfvars.json
+                     echo Activate service account
+                     gcloud auth activate-service-account --key-file $GOOGLE_APPLICATION_CREDENTIALS
+                 '''
+            }
          }
+         stage('Initialise') {
+              steps {
+                  sh '''
+                      make projects
+                  '''
+             }
+        }
     }
 }
