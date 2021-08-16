@@ -17,14 +17,14 @@ pipeline {
                 defaultValue: '{"foo":"bar","cat":"fish"}'
         )
     }
-    stage ('Test received params') {
-                steps {
-                    sh '''
-                    echo \"$projects_params\"
-                    '''
-                }
-            }
     stages {
+        stage ('Test received params') {
+                        steps {
+                            sh '''
+                            echo \"$projects_params\"
+                            '''
+                        }
+                    }
         stage('Setup Terraform & Dependencies') {
              steps {
                  container('gcloud') {
