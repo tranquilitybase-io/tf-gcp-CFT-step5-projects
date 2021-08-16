@@ -45,7 +45,7 @@ pipeline {
                      steps {
                          sh '''
                              echo Setup projects_params
-                             echo $project_params | jq "." > terraform.auto.tfvars.json
+                             echo \"$projects_params\" | jq "." > terraform.auto.tfvars.json
                              cat ./terraform.auto.tfvars.json
                              echo Activate service account
                              gcloud auth activate-service-account --key-file $GOOGLE_APPLICATION_CREDENTIALS
