@@ -33,6 +33,7 @@ pipeline {
                      steps {
                          sh '''
                              echo Setup projects_params
+                             echo $project_params | jq "."
                              echo $project_params | jq "." > terraform.auto.tfvars.json
 
                              echo Activate service account
