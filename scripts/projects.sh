@@ -6,31 +6,28 @@ PROJECTS_FOLDER=./projects
 ENV_VARIABLES=./env-variables.sh
 [ -f $ENV_VARIABLES ] && { echo Sourcing required variables; source $ENV_VARIABLES; } || echo "Can't find $ENV_VARIABLES file"
 
-pwd
-ls
 
+echo Creating projects folder
+mkdir projects
+cd ./projects
 
-#echo Creating projects folder
-#mkdir projects
-#cd ./projects
-#
-#echo Cloning CFT
-#CFT_FOLDER=./terraform-example-foundation
-#[ -d $CFT_FOLDER ] && { echo "Removing past deployment file: $CFT_FOLDER"; rm -rf $CFT_FOLDER; } || echo "No past deployments found"
-#git clone https://github.com/terraform-google-modules/terraform-example-foundation.git
-#
-#echo Checkout latest release
-#cd ./terraform-example-foundation/
-#git checkout ed164ba
-#cd ..
-#
+echo Cloning CFT
+CFT_FOLDER=./terraform-example-foundation
+[ -d $CFT_FOLDER ] && { echo "Removing past deployment file: $CFT_FOLDER"; rm -rf $CFT_FOLDER; } || echo "No past deployments found"
+git clone https://github.com/terraform-google-modules/terraform-example-foundation.git
+
+echo Checkout latest release
+cd ./terraform-example-foundation/
+git checkout ed164ba
+cd ..
+
 #echo Cloning gcp projects GSR
 #GCP_PROJECTS_FOLDER=./gcp-projects
 #[ -d $GCP_PROJECTS_FOLDER ] && { echo "Removing past deployment file: $GCP_PROJECTS_FOLDER"; rm -rf $GCP_PROJECTS_FOLDER; } || echo "No past deployments found"
 #gcloud source repos clone gcp-projects --project=$CLOUD_BUILD_PROJECT_ID
 #cd gcp-projects
 #
-#
+
 #echo Checking out plan
 #git checkout -b plan
 #
