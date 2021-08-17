@@ -6,6 +6,10 @@ PROJECTS_FOLDER=./projects
 ENV_VARIABLES=./env-variables.sh
 [ -f $ENV_VARIABLES ] && { echo Sourcing required variables; source $ENV_VARIABLES; } || echo "Can't find $ENV_VARIABLES file"
 
+pwd
+ls
+
+
 #echo Creating projects folder
 #mkdir projects
 #cd ./projects
