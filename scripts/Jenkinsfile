@@ -7,7 +7,7 @@ pipeline {
     }
     environment {
            def projects_params = "${projects_params}"
-           def CICD_PROJECT_ID = "${CICD_PROJECT_ID}"
+           def cicd_project = "${cicd_project}"
 
 
     }
@@ -23,6 +23,7 @@ pipeline {
                         steps {
                             sh '''
                             echo \"$projects_params\"
+                            echo \"$cicd_project\"
                             '''
                         }
                     }
@@ -49,7 +50,7 @@ pipeline {
                      echo \"$projects_params\" | jq "." > terraform.auto.tfvars.json
 
                      echo "Exporting cloud build project id"
-                     export CLOUD_BUILD_PROJECT_ID=$CICD_PROJECT_ID
+                     export CLOUD_BUILD_PROJECT_ID=$cicd_project
                      echo $CICD_PROJECT_ID
 
                      echo "Activating service account"
