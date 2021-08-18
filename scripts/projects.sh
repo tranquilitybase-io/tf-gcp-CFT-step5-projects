@@ -21,26 +21,30 @@ cd ./terraform-example-foundation/
 git checkout ed164ba
 cd ..
 
-echo Cloning gcp projects GSR
-GCP_PROJECTS_FOLDER=./gcp-projects
-[ -d $GCP_PROJECTS_FOLDER ] && { echo "Removing past deployment file: $GCP_PROJECTS_FOLDER"; rm -rf $GCP_PROJECTS_FOLDER; } || echo "No past deployments found"
-gcloud source repos clone gcp-projects --project=$CLOUD_BUILD_PROJECT_ID
-cd gcp-projects
+echo "###"
+ecbo $CLOUD_BUILD_PROJECT_ID
+echo "###"
+
+# echo Cloning gcp projects GSR
+# GCP_PROJECTS_FOLDER=./gcp-projects
+# [ -d $GCP_PROJECTS_FOLDER ] && { echo "Removing past deployment file: $GCP_PROJECTS_FOLDER"; rm -rf $GCP_PROJECTS_FOLDER; } || echo "No past deployments found"
+# gcloud source repos clone gcp-projects --project=$CLOUD_BUILD_PROJECT_ID
+# cd gcp-projects
 
 
-echo Checking out plan
-git checkout -b plan
+# echo Checking out plan
+# git checkout -b plan
 
-echo Copying needed build files
-cp -R ../terraform-example-foundation/4-projects/. .
-cp ../terraform-example-foundation/build/cloudbuild-tf-* .
-cp ../terraform-example-foundation/build/tf-wrapper.sh .
-chmod 755 ./tf-wrapper.sh
+# echo Copying needed build files
+# cp -R ../terraform-example-foundation/4-projects/. .
+# cp ../terraform-example-foundation/build/cloudbuild-tf-* .
+# cp ../terraform-example-foundation/build/tf-wrapper.sh .
+# chmod 755 ./tf-wrapper.sh
 
 
-echo Removing unneeded access_context.auto.example.tfvars
-TF_EXAMPLE_VARS=./access_context.auto.example.tfvars
-[ -f $TF_EXAMPLE_VARS ] && { echo "Removing unneeded $TF_EXAMPLE_VARS file: $TF_EXAMPLE_VARS"; rm $TF_EXAMPLE_VARS; } || { echo "No $TF_EXAMPLE_VARS file found";  }
+# echo Removing unneeded access_context.auto.example.tfvars
+# TF_EXAMPLE_VARS=./access_context.auto.example.tfvars
+# [ -f $TF_EXAMPLE_VARS ] && { echo "Removing unneeded $TF_EXAMPLE_VARS file: $TF_EXAMPLE_VARS"; rm $TF_EXAMPLE_VARS; } || { echo "No $TF_EXAMPLE_VARS file found";  }
 
 # echo Copying in needed access_context.auto.tfvars
 # TF_VARS=../../access_context.auto.tfvars
