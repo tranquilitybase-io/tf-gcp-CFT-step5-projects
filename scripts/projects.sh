@@ -1,5 +1,8 @@
 echo "starting script!!"
 
+pwd 
+ls
+
 # PROJECTS_FOLDER=./projects
 # [ -d $PROJECTS_FOLDER ] && { echo "Removing past deployment file $PROJECTS_FOLDER"; rm -rf $PROJECTS_FOLDER; } || echo "No past deployments found"
 
