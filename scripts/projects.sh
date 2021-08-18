@@ -1,49 +1,46 @@
 echo "starting script!!"
 
-pwd 
-ls
+PROJECTS_FOLDER=./projects
+[ -d $PROJECTS_FOLDER ] && { echo "Removing past deployment file $PROJECTS_FOLDER"; rm -rf $PROJECTS_FOLDER; } || echo "No past deployments found"
 
-# PROJECTS_FOLDER=./projects
-# [ -d $PROJECTS_FOLDER ] && { echo "Removing past deployment file $PROJECTS_FOLDER"; rm -rf $PROJECTS_FOLDER; } || echo "No past deployments found"
-
-# ENV_VARIABLES=./env-variables.sh
-# [ -f $ENV_VARIABLES ] && { echo Sourcing required variables; source $ENV_VARIABLES; } || echo "Can't find $ENV_VARIABLES file"
+ENV_VARIABLES=./env-variables.sh
+[ -f $ENV_VARIABLES ] && { echo Sourcing required variables; source $ENV_VARIABLES; } || echo "Can't find $ENV_VARIABLES file"
 
 
-# echo Creating projects folder
-# mkdir projects
-# cd ./projects
+echo Creating projects folder
+mkdir projects
+cd ./projects
 
-# echo Cloning CFT
-# CFT_FOLDER=./terraform-example-foundation
-# [ -d $CFT_FOLDER ] && { echo "Removing past deployment file: $CFT_FOLDER"; rm -rf $CFT_FOLDER; } || echo "No past deployments found"
-# git clone https://github.com/terraform-google-modules/terraform-example-foundation.git
+echo Cloning CFT
+CFT_FOLDER=./terraform-example-foundation
+[ -d $CFT_FOLDER ] && { echo "Removing past deployment file: $CFT_FOLDER"; rm -rf $CFT_FOLDER; } || echo "No past deployments found"
+git clone https://github.com/terraform-google-modules/terraform-example-foundation.git
 
-# echo Checkout latest release
-# cd ./terraform-example-foundation/
-# git checkout ed164ba
-# cd ..
+echo Checkout latest release
+cd ./terraform-example-foundation/
+git checkout ed164ba
+cd ..
 
-# echo Cloning gcp projects GSR
-# GCP_PROJECTS_FOLDER=./gcp-projects
-# [ -d $GCP_PROJECTS_FOLDER ] && { echo "Removing past deployment file: $GCP_PROJECTS_FOLDER"; rm -rf $GCP_PROJECTS_FOLDER; } || echo "No past deployments found"
-# gcloud source repos clone gcp-projects --project=$CLOUD_BUILD_PROJECT_ID
-# cd gcp-projects
-
-
-# echo Checking out plan
-# git checkout -b plan
-
-# echo Copying needed build files
-# cp -R ../terraform-example-foundation/4-projects/. .
-# cp ../terraform-example-foundation/build/cloudbuild-tf-* .
-# cp ../terraform-example-foundation/build/tf-wrapper.sh .
-# chmod 755 ./tf-wrapper.sh
+echo Cloning gcp projects GSR
+GCP_PROJECTS_FOLDER=./gcp-projects
+[ -d $GCP_PROJECTS_FOLDER ] && { echo "Removing past deployment file: $GCP_PROJECTS_FOLDER"; rm -rf $GCP_PROJECTS_FOLDER; } || echo "No past deployments found"
+gcloud source repos clone gcp-projects --project=$CLOUD_BUILD_PROJECT_ID
+cd gcp-projects
 
 
-# echo Removing unneeded access_context.auto.example.tfvars
-# TF_EXAMPLE_VARS=./access_context.auto.example.tfvars
-# [ -f $TF_EXAMPLE_VARS ] && { echo "Removing unneeded $TF_EXAMPLE_VARS file: $TF_EXAMPLE_VARS"; rm $TF_EXAMPLE_VARS; } || { echo "No $TF_EXAMPLE_VARS file found";  }
+echo Checking out plan
+git checkout -b plan
+
+echo Copying needed build files
+cp -R ../terraform-example-foundation/4-projects/. .
+cp ../terraform-example-foundation/build/cloudbuild-tf-* .
+cp ../terraform-example-foundation/build/tf-wrapper.sh .
+chmod 755 ./tf-wrapper.sh
+
+
+echo Removing unneeded access_context.auto.example.tfvars
+TF_EXAMPLE_VARS=./access_context.auto.example.tfvars
+[ -f $TF_EXAMPLE_VARS ] && { echo "Removing unneeded $TF_EXAMPLE_VARS file: $TF_EXAMPLE_VARS"; rm $TF_EXAMPLE_VARS; } || { echo "No $TF_EXAMPLE_VARS file found";  }
 
 # echo Copying in needed access_context.auto.tfvars
 # TF_VARS=../../access_context.auto.tfvars
