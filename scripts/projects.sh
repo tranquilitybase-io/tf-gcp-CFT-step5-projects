@@ -22,7 +22,7 @@ git checkout ed164ba
 cd ..
 
 echo "###"
-ecbo $CLOUD_BUILD_PROJECT_ID
+echo $CLOUD_BUILD_PROJECT_ID
 echo "###"
 
 # echo Cloning gcp projects GSR
