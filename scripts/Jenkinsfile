@@ -51,7 +51,7 @@ pipeline {
 
                      echo "Exporting cloud build project id"
                      export CLOUD_BUILD_PROJECT_ID=$cicd_project
-                     echo $CICD_PROJECT_ID
+                     echo $cicd_project
 
                      echo "Activating service account"
                      gcloud auth activate-service-account --key-file $GOOGLE_APPLICATION_CREDENTIALS
