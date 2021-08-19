@@ -46,13 +46,6 @@ pipeline {
          stage('Initialise') {
              steps {
                  sh '''
-                     echo "Creating terraform auto file"
-                     echo \"$projects_params\" | jq "." > terraform.auto.tfvars.json
-
-                     echo "Exporting cloud build project id"
-                     export CLOUD_BUILD_PROJECT_ID=$cicd_project
-                     echo $cicd_project
-
                      echo "Activating service account"
                      gcloud auth activate-service-account --key-file $GOOGLE_APPLICATION_CREDENTIALS
                  '''
@@ -61,6 +54,11 @@ pipeline {
          stage('Make Project') {
               steps {
                   sh '''
+                      echo "Creating terraform auto file"
+                      echo \"$projects_params\" | jq "." > terraform.auto.tfvars.json
+                      echo "Exporting cloud build project id"
+                      export CLOUD_BUILD_PROJECT_ID=$cicd_project
+                      echo $cicd_project
                       make projects
                   '''
              }
