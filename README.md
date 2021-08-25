@@ -62,7 +62,7 @@
 
 1. Rename `development.auto.example.tfvars` to `development.auto.tfvars` and update the file with values from your environment.
 
-1. Rename `env-variables-example.sh` to `env-variables.sh` and update the file with values from your environment.
+1. Rename `env-variables-example.sh` to `env-variables.sh` and update the file with the project id of the cicd project created within the bootstrap step.
 
 1. Rename `non-production.auto.example.tfvars` to `non-production.auto.tfvars` and update the file with values from your environment.
 
