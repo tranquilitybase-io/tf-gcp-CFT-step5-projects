@@ -11,13 +11,6 @@ pipeline {
 
 
     }
-    parameters {
-
-        string( name: 'projects_params',
-                description: 'json string',
-                defaultValue: '{"abc":"123","cat":"fish"}'
-        )
-    }
     stages {
         stage ('Test received params') {
                         steps {
@@ -27,6 +20,17 @@ pipeline {
                             '''
                         }
                     }
+        stage('Activate GCP Service Account and Set Project') {
+            steps {
+
+                container('gcloud') {
+                    sh '''
+                        gcloud auth activate-service-account --key-file=$GOOGLE_APPLICATION_CREDENTIALS
+                        gcloud config list
+                       '''
+                }
+            }
+        }
         stage('Setup Terraform & Dependencies') {
              steps {
                  container('gcloud') {
@@ -43,25 +47,20 @@ pipeline {
              }
 
          }
-         stage('Initialise') {
-             steps {
-                 sh '''
-                     echo "Activating service account"
-                     gcloud auth activate-service-account --key-file $GOOGLE_APPLICATION_CREDENTIALS
-                 '''
-            }
-         }
-         stage('Make Project') {
-              steps {
-                  sh '''
-                      echo "Creating terraform auto file"
-                      echo \"$projects_params\" | jq "." > terraform.auto.tfvars.json
-                      echo "Exporting cloud build project id"
-                      export CLOUD_BUILD_PROJECT_ID=$cicd_project
-                      echo $cicd_project
-                      make projects
-                  '''
-             }
+        stage('Deploy CFT 4-projects') {
+                     steps {
+                         container('gcloud') {
+                                sh '''
+                                   export CLOUD_BUILD_PROJECT_ID=$cicd_project
+                                   cd ./scripts/4-projects/ && echo \"$projects_params\" | jq "." > terraform.auto.tfvars.json
+                                   cat terraform.auto.tfvars.json
+                                   cd ../.. && make projects
+                                   echo "4-projects done"
+                                 '''
+
+                         }
+
+                     }
         }
     }
 }
