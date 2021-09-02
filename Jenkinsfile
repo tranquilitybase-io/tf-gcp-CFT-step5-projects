@@ -52,10 +52,19 @@ pipeline {
                          container('gcloud') {
                                 sh '''
                                    export CLOUD_BUILD_PROJECT_ID=$cicd_project
-                                   cd ./scripts/4-projects/ && echo \"$projects_params\" | jq "." > terraform.auto.tfvars.json
-                                   cat terraform.auto.tfvars.json
-                                   cd ../.. && make projects
-                                   echo "4-projects done"
+                                   
+                                   cd ./scripts/4-projects/ 
+                                   echo \"$projects_params\" | jq "." > common.auto.tfvars.json  
+                                   echo \"$projects_params\" | jq "." > shared.auto.tfvars.json
+                                   echo \"$projects_params\" | jq "." > development.auto.tfvars.json
+                                   echo \"$projects_params\" | jq "." > non-production.auto.tfvars.json
+                                   echo \"$projects_params\" | jq "." > production.auto.tfvars.json
+                                   echo \"$projects_params\" | jq "." > access_context.auto.tfvars.json
+                                   mv backend-example.tf backend.tf
+                                   sed -i "s/UPDATE_ME/$state_bucket/" backend.tf
+                                   cd ../..
+                                   make networks
+                                   echo "4-projects  done"                                                                                                      
                                  '''
 
                          }
